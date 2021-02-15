@@ -1,4 +1,5 @@
-const stats = document.getElementById('stats');
+const orientation = document.getElementById('orientation');
+const motion = document.getElementById('motion');
 const media = document.getElementById('media');
 
 window.addEventListener('drop', e => {
@@ -26,21 +27,17 @@ window.addEventListener('dragover', e => {
 
 window.requestPermission = () => {
   if (typeof DeviceOrientationEvent !== 'undefined') {
-    stats.textContent = `DeviceOrientation: ${Object.keys(
+    orientation.textContent = `DeviceOrientation: ${Object.keys(
       DeviceOrientationEvent
     )}`;
     DeviceOrientationEvent.requestPermission()
       .then(permissionState => {
-        stats.textContent = `permission: ${permissionState}`;
+        orientation.textContent = `permission: ${permissionState}`;
         if (permissionState === 'granted') {
           window.addEventListener('deviceorientation', e => {
-            stats.textContent = `orientation: ${e}`;
+            orientation.textContent = `orientation: ${e}`;
             const { absolute, alpha, beta, gamma } = e;
-            console.log(`absolute:`, absolute);
-            console.log(`alpha:`, alpha);
-            console.log(`beta:`, beta);
-            console.log(`gamma:`, gamma);
-            stats.textContent = JSON.stringify(
+            orientation.textContent = JSON.stringify(
               { absolute, alpha, beta, gamma },
               null,
               2
@@ -48,14 +45,20 @@ window.requestPermission = () => {
           });
 
           window.addEventListener('devicemotion', e => {
-            stats.textContent = `motion: ${e}`;
-            const { absolute, alpha, beta, gamma } = e;
-            console.log(`absolute:`, absolute);
-            console.log(`alpha:`, alpha);
-            console.log(`beta:`, beta);
-            console.log(`gamma:`, gamma);
-            stats.textContent = JSON.stringify(
-              { absolute, alpha, beta, gamma },
+            motion.textContent = `motion: ${e}`;
+            const {
+              acceleration,
+              accelerationIncludingGravity,
+              rotationRate,
+              interval,
+            } = e;
+            motion.textContent = JSON.stringify(
+              {
+                acceleration,
+                accelerationIncludingGravity,
+                rotationRate,
+                interval,
+              },
               null,
               2
             );
@@ -64,7 +67,7 @@ window.requestPermission = () => {
       })
       .catch(console.error);
   } else {
-    stats.textContent = 'DeviceOrientationEvent is undefined';
+    orientation.textContent = 'DeviceOrientationEvent is undefined';
   }
 };
 // const getUserMedia = navigator;
