@@ -12,7 +12,7 @@ config.output = {
 config.module = {};
 
 config.devServer = {
-  contentBase: path.join(__dirname, 'dist'),
+  contentBase: path.join(__dirname, 'docs'),
   compress: true,
   https: true,
   // host: '0.0.0.0',
@@ -20,7 +20,7 @@ config.devServer = {
 };
 
 config.plugins = [
-  new HtmlWebpackPlugin({ template: 'index.template.html', output: 'dist' }),
+  new HtmlWebpackPlugin({ template: 'index.template.html', output: 'docs' }),
 ];
 
 console.log(`Running on ${ip.address()}:9000`);
