@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve",
     "clean": "rm -rf docs",
-    "build": "yarn clean && webpack"
+    "build": "yarn clean && webpack",
+    "clean-dev": "rm -rf docs/dev",
+    "build-dev": "yarn clean-dev && webpack --config webpack.dev.js"
   },
   "repository": {
     "type": "git",
