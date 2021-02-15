@@ -5,6 +5,7 @@ const { makeWebpackConfig } = require('webpack-simple');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = makeWebpackConfig({
+  mode: 'production',
   output: {
     path: path.join(process.cwd(), 'docs'),
   },
