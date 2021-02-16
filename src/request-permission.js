@@ -1,19 +1,19 @@
-const orientation = document.getElementById('orientation');
-const motion = document.getElementById('motion');
+const dropZone = document.getElementById('drop-zone-contents');
 
 export default function requestPermission() {
   if (typeof DeviceOrientationEvent !== 'undefined') {
-    orientation.textContent = `DeviceOrientation: ${Object.keys(
+    dropZone.textContent = `DeviceOrientation: ${Object.keys(
       DeviceOrientationEvent
     )}`;
     DeviceOrientationEvent.requestPermission()
       .then(permissionState => {
         if (permissionState !== 'granted') {
-          orientation.textContent = 'Permission denied';
+          dropZone.textContent = 'Permission denied';
           return;
         }
 
         window.addEventListener('deviceorientation', e => {
+          const orientation = document.createElement('pre');
           orientation.textContent = JSON.stringify(
             {
               absolute: Math.round(e.absolute),
@@ -24,9 +24,11 @@ export default function requestPermission() {
             null,
             2
           );
+          dropZone.appendChild(orientation);
         });
 
         window.addEventListener('devicemotion', e => {
+          const motion = document.createElement('pre');
           motion.textContent = JSON.stringify(
             {
               acceleration: {
@@ -50,10 +52,11 @@ export default function requestPermission() {
             null,
             2
           );
+          dropZone.appendChild(motion);
         });
       })
       .catch(console.error);
   } else {
-    orientation.textContent = 'DeviceOrientationEvent is undefined';
+    dropZone.textContent = 'DeviceOrientationEvent is undefined';
   }
 }
