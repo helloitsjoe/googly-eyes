@@ -1,6 +1,13 @@
-import requestPermission from './request-permission';
+import requestPermission from './device-orientation';
+import { addDragHandlers } from './drag-handlers';
 
-window.addEventListener('drop', e => {
+const noop = e => {
+  e.preventDefault();
+  e.stopPropagation();
+  console.log(`Noop`, e.x);
+};
+
+const dropHandler = e => {
   e.preventDefault();
   requestPermission();
 
@@ -14,20 +21,19 @@ window.addEventListener('drop', e => {
     img.src = reader.result;
     img.style.display = 'flex';
     dropZone.style.display = 'none';
+
+    // Allow dragging after image loads
+    window.removeEventListener('drop', dropHandler);
+    window.removeEventListener('dragstart', noop);
+    window.removeEventListener('dragover', noop);
+    window.removeEventListener('dragend', noop);
+
+    // addDragHandlers(document.getElementById('container'));
+    addDragHandlers(window);
   };
-});
+};
 
-window.addEventListener('dragstart', e => {
-  e.preventDefault();
-  e.stopPropagation();
-});
-
-window.addEventListener('dragover', e => {
-  e.preventDefault();
-  e.stopPropagation();
-});
-
-window.addEventListener('dragend', e => {
-  e.preventDefault();
-  e.stopPropagation();
-});
+window.addEventListener('drop', dropHandler);
+window.addEventListener('dragstart', noop);
+window.addEventListener('dragover', noop);
+window.addEventListener('dragend', noop);

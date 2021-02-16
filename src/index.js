@@ -1,4 +1,4 @@
-import requestPermission from './request-permission';
+import requestPermission from './device-orientation';
 import './drop-handlers';
 
 // TODO: Get photo from phone
