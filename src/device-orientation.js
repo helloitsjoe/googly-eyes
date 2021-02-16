@@ -1,4 +1,7 @@
 const dropZone = document.getElementById('drop-zone-contents');
+dropZone.onclick = e => {
+  requestPermission();
+};
 
 export default function requestPermission() {
   if (
