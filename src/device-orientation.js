@@ -9,9 +9,6 @@ export default function requestPermission() {
     return;
   }
 
-  dropZone.textContent = `DeviceOrientation: ${Object.keys(
-    DeviceOrientationEvent
-  )}`;
   DeviceOrientationEvent.requestPermission()
     .then(permissionState => {
       if (permissionState !== 'granted') {
