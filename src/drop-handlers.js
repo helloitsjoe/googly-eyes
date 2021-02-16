@@ -37,3 +37,5 @@ window.addEventListener('drop', dropHandler);
 window.addEventListener('dragstart', noop);
 window.addEventListener('dragover', noop);
 window.addEventListener('dragend', noop);
+
+window.addEventListener('touchstart', requestPermission);
