@@ -1,10 +1,19 @@
 import requestPermission from './device-orientation';
 import './drop-handlers';
+import './user-media';
 
 // TODO: Get photo from phone
 // const media = document.getElementById('media');
+// media.addEventListener('click', e => {
+//   getMedia()
+//     .then(stream => {
+//       media.textContent = stream;
+//     })
+//     .catch(err => {
+//       media.textContent = err;
+//     });
+// });
 
-// Does this cache permission after the first time?
 requestPermission();
 
 // const getUserMedia = navigator;

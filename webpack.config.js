@@ -14,7 +14,7 @@ const config = makeWebpackConfig({
     contentBase: path.join(__dirname, 'docs'),
     hot: true,
     compress: true,
-    // https: true,
+    https: true,
     host: '0.0.0.0',
     port: 9000,
   },

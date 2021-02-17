@@ -57,7 +57,7 @@
       }
 
       .ball {
-        background-color: red;
+        background-color: white;
         position: absolute;
         border-radius: 50%;
         height: 30px;
@@ -65,20 +65,36 @@
         left: 0;
         top: 0;
       }
+
+      .pupil {
+        background-color: black;
+      }
+
+      .file-input {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+      }
     </style>
   <script defer src="main.js"></script></head>
   <body>
     <!-- <canvas id='canvas'></canvas> -->
     <!-- <script src="./dist"></script> -->
     <div id="container">
-      <div id="drop-zone"><div id="drop-zone-contents">DROP HERE</div></div>
+      <div id="drop-zone">
+        <div id="drop-zone-contents">DROP HERE</div>
+        <label for="file-input" class="file-input">
+          Tap to upload a photo
+          <input type="file" class="hidden" id="file-input" />
+        </label>
+      </div>
       <!-- <pre id="orientation">Orientation</pre> -->
       <!-- <pre id="motion">Motion</pre> -->
       <!-- <pre id="media"></pre> -->
       <!-- <button onclick="window.requestPermission()">Use device</button> -->
       <div id="img-container">
         <img id="main-img" />
-        <div class="ball hidden"></div>
+        <div class="ball hidden"><div class="pupil"></div></div>
       </div>
     </div>
   </body>
