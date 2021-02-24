@@ -1,0 +1,121 @@
+{
+  "inputs": {
+    "index.html.inline.0.css": {
+      "bytes": 1417,
+      "imports": []
+    },
+    "_snowpack/pkg/common/index-e66f0a38.js": {
+      "bytes": 8994,
+      "imports": []
+    },
+    "_snowpack/pkg/react.js": {
+      "bytes": 183,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/index-e66f0a38.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/common/index-e66f0a38.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "_snowpack/pkg/react-dom.js": {
+      "bytes": 127507,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/common/index-e66f0a38.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/device-orientation.js": {
+      "bytes": 1321,
+      "imports": []
+    },
+    "dist/user-media.js": {
+      "bytes": 1614,
+      "imports": []
+    },
+    "dist/App.js": {
+      "bytes": 3133,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/react.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/device-orientation.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/user-media.js",
+          "kind": "import-statement"
+        }
+      ]
+    },
+    "dist/index.js": {
+      "bytes": 246,
+      "imports": [
+        {
+          "path": "_snowpack/pkg/react.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "_snowpack/pkg/react-dom.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/App.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/user-media.js",
+          "kind": "import-statement"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "../~~bundle~~/index.html.inline.0.css": {
+      "imports": [],
+      "entryPoint": "index.html.inline.0.css",
+      "inputs": {
+        "index.html.inline.0.css": {
+          "bytesInOutput": 802
+        }
+      },
+      "bytes": 803
+    },
+    "../~~bundle~~/dist/index.js": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "dist/index.js",
+      "inputs": {
+        "_snowpack/pkg/common/index-e66f0a38.js": {
+          "bytesInOutput": 7147
+        },
+        "_snowpack/pkg/react.js": {
+          "bytesInOutput": 22
+        },
+        "_snowpack/pkg/react-dom.js": {
+          "bytesInOutput": 123834
+        },
+        "dist/device-orientation.js": {
+          "bytesInOutput": 851
+        },
+        "dist/user-media.js": {
+          "bytesInOutput": 114
+        },
+        "dist/App.js": {
+          "bytesInOutput": 1637
+        },
+        "dist/index.js": {
+          "bytesInOutput": 61
+        }
+      },
+      "bytes": 133718
+    }
+  }
+}

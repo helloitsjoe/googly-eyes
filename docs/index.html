@@ -1,101 +1,15 @@
-<html>
-  <head>
-    <title> </title>
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Googly Eyes</title>
     <!-- <link href="style.css" type="text/css" rel="stylesheet" /> -->
     <!-- <script src="pixi.min.js"></script> -->
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, Helvetica, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      #container {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-      }
-
-      #drop-zone {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: auto;
-        width: 80%;
-        height: 80%;
-        font-size: 2em;
-        color: gray;
-        background-color: #eee;
-        border: 4px dashed darkgray;
-        box-shadow: inset 0px 5px 10px lightgray;
-        border-radius: 2rem;
-        text-align: center;
-      }
-
-      #drop-zone-contents {
-        text-align: left;
-        margin: 2em;
-      }
-
-      #main-img {
-        display: none;
-        margin: auto;
-        height: 80vh;
-        width: auto;
-      }
-
-      .hidden {
-        display: none;
-      }
-
-      .ball {
-        background-color: white;
-        position: absolute;
-        border-radius: 50%;
-        height: 30px;
-        width: 30px;
-        left: 0;
-        top: 0;
-      }
-
-      .pupil {
-        background-color: black;
-      }
-
-      .file-input {
-        display: inline-block;
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-  <script defer src="main.js"></script></head>
+    <style>html,body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}*{box-sizing:border-box}#container{display:flex;flex-direction:column;height:100vh;width:100%;justify-content:center;align-items:center}#drop-zone{display:flex;flex-direction:column;justify-content:center;margin:auto;width:80%;height:80%;font-size:2em;color:gray;background-color:#eee;border:4px dashed darkgray;box-shadow:inset 0px 5px 10px lightgray;border-radius:2rem;text-align:center}#drop-zone-contents{text-align:left;margin:2em}#main-img{display:flex;margin:auto;height:80vh;width:auto}.hidden{display:none}.ball{background-color:#fff;position:absolute;border-radius:50%;height:30px;width:30px;left:0;top:0}.pupil{background-color:#000}.file-input{display:flex;justify-content:center;align-items:center;width:100%;height:100%}
+</style>
+  </head>
   <body>
-    <!-- <canvas id='canvas'></canvas> -->
-    <!-- <script src="./dist"></script> -->
-    <div id="container">
-      <div id="drop-zone">
-        <div id="drop-zone-contents">DROP HERE</div>
-        <label for="file-input" class="file-input">
-          Tap to upload a photo
-          <input type="file" class="hidden" id="file-input" />
-        </label>
-      </div>
-      <!-- <pre id="orientation">Orientation</pre> -->
-      <!-- <pre id="motion">Motion</pre> -->
-      <!-- <pre id="media"></pre> -->
-      <!-- <button onclick="window.requestPermission()">Use device</button> -->
-      <div id="img-container">
-        <img id="main-img" />
-        <div class="ball hidden"><div class="pupil"></div></div>
-      </div>
-    </div>
-  </body>
-</html>
+    <div id="root"></div>
+    <script type="module" src="dist/index.js"></script>
+  
+
+</body></html>
