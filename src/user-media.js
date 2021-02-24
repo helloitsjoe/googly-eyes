@@ -1,28 +1,13 @@
-// Get access to camera
-export const getMedia = () => {
-  if (
-    !navigator.mediaDevices ||
-    typeof navigator.mediaDevices.getUserMedia !== 'function'
-  ) {
-    return Promise.resolve(null);
-  }
+/* eslint-disable import/prefer-default-export */
 
-  return navigator.mediaDevices.getUserMedia({ video: true });
-};
-
-const input = document.getElementById('file-input');
-
-input.onchange = e => {
-  const reader = new FileReader();
-  const [file] = input.files;
-  reader.readAsDataURL(file);
-  reader.onloadend = () => {
-    const img = document.getElementById('main-img');
-    const dropZone = document.getElementById('drop-zone');
-    img.src = reader.result;
-    img.style.display = 'flex';
-    dropZone.style.display = 'none';
-
+export const readFile = file => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onerror = reject;
+    reader.onloadend = () => {
+      resolve(reader.result);
+    };
     // Allow dragging after image loads
     // window.removeEventListener('drop', dropHandler);
     // window.removeEventListener('dragstart', noop);
@@ -31,9 +16,40 @@ input.onchange = e => {
 
     // addDragHandlers(document.getElementById('container'));
     // addDragHandlers(window);
-  };
+  });
 };
 
-// input.addEventListener('change', e => {
-//   console.log('e', e);
+// Get access to camera
+// export const getMedia = () => {
+//   if (
+//     !navigator.mediaDevices ||
+//     typeof navigator.mediaDevices.getUserMedia !== 'function'
+//   ) {
+//     return Promise.resolve(null);
+//   }
+
+//   return navigator.mediaDevices.getUserMedia({ video: true });
+// };
+
+// const media = document.getElementById('media');
+// media.addEventListener('click', e => {
+//   getMedia()
+//     .then(stream => {
+//       media.textContent = stream;
+//     })
+//     .catch(err => {
+//       media.textContent = err;
+//     });
 // });
+
+// const getUserMedia = navigator;
+// document.getElementById('media').textContent = `getUserMedia: ${getUserMedia}`;
+// if (getUserMedia) {
+//   console.log(`getUserMedia:`, getUserMedia);
+//   getUserMedia({ photo: true }).then(stream => {
+//     console.log(stream);
+//     document.getElementById('media').textContent = stream;
+//   });
+// } else {
+//   console.log('getUserMedia is not defined');
+// }

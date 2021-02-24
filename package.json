@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack serve",
+    "start": "snowpack dev",
     "clean": "rm -rf docs",
-    "build": "yarn clean && webpack",
+    "build": "snowpack build",
     "clean-dev": "rm -rf docs/dev",
     "build-dev": "yarn clean-dev && webpack --config webpack.dev.js"
   },
@@ -23,12 +23,21 @@
   "homepage": "https://github.com/helloitsjoe/googly-eyes#readme",
   "description": "",
   "devDependencies": {
+    "@babel/core": "^7.13.1",
+    "@babel/preset-react": "^7.12.13",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.19.0",
-    "html-webpack-plugin": "^5.0.0",
+    "eslint-config-helloitsjoe": "^1.2.4",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "ip": "^1.1.5",
-    "webpack": "^5.21.2",
-    "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2",
-    "webpack-simple": "^1.7.1"
+    "prettier": "^2.2.1",
+    "snowpack": "^3.0.11"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }
