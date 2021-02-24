@@ -5,6 +5,7 @@ module.exports = {
     public: '/',
   },
   devOptions: {
+    // Needs https for connecting to mobile locally
     secure: true,
   },
 };
