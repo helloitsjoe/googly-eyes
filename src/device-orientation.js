@@ -1,8 +1,3 @@
-// const dropZone = document.getElementById('drop-zone-contents');
-// dropZone.onclick = e => {
-//   requestPermission();
-// };
-
 export function requestPermission() {
   if (
     typeof DeviceOrientationEvent === 'undefined' ||

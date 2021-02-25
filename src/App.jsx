@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { cloneElement } from 'react';
+import React from 'react';
 import {
   getDeviceMotion,
   getDeviceOrientation,
   requestPermission,
 } from './device-orientation';
-import { addDropHandlers } from './drop-handlers';
+import { addWindowBlockers } from './drop-handlers';
 import { readFile } from './user-media';
 
 const RADIUS = 30;
@@ -51,7 +51,7 @@ const DropZone = () => {
   }, [allowed]);
 
   React.useEffect(() => {
-    const removeDropHandlers = addDropHandlers();
+    const removeWindowBlockers = addWindowBlockers();
     const dropHandler = e => {
       e.preventDefault();
       readFile(e.dataTransfer.files[0])
@@ -61,7 +61,7 @@ const DropZone = () => {
     window.addEventListener('drop', dropHandler);
     return () => {
       window.removeEventListener('drop', dropHandler);
-      removeDropHandlers();
+      removeWindowBlockers();
     };
   }, []);
 
