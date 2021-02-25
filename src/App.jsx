@@ -1,10 +1,16 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/prop-types */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { cloneElement } from 'react';
 import {
   getDeviceMotion,
   getDeviceOrientation,
   requestPermission,
 } from './device-orientation';
+import { addDropHandlers } from './drop-handlers';
 import { readFile } from './user-media';
+
+const RADIUS = 30;
 
 export const App = () => {
   return (
@@ -23,9 +29,12 @@ const DropZone = () => {
   const [allowed, setAllowed] = React.useState(false);
 
   React.useEffect(() => {
-    // requestPermission()
-    //   .then(() => setAllowed(true))
-    //   .catch(err => setError(err.message));
+    requestPermission()
+      .then(() => {
+        setAllowed(true);
+        setError('');
+      })
+      .catch(err => setError(err.message));
 
     window.addEventListener('deviceorientation', e => {
       const { alpha: a, beta: b, gamma: g } = getDeviceOrientation(e);
@@ -41,60 +50,152 @@ const DropZone = () => {
     };
   }, [allowed]);
 
+  React.useEffect(() => {
+    const removeDropHandlers = addDropHandlers();
+    const dropHandler = e => {
+      e.preventDefault();
+      readFile(e.dataTransfer.files[0])
+        .then(imageSrc => setSrc(imageSrc))
+        .catch(err => setError(err.message));
+    };
+    window.addEventListener('drop', dropHandler);
+    return () => {
+      window.removeEventListener('drop', dropHandler);
+      removeDropHandlers();
+    };
+  }, []);
+
+  if (src) {
+    return <ImageContainer src={src} pitch={beta} roll={gamma} />;
+  }
+
   return (
     <>
-      {src ? (
-        <ImageContainer src={src} />
-      ) : (
-        <div id="drop-zone">
-          {/* <div id="drop-zone-contents">DROP HERE</div> */}
-          <label htmlFor="file-input" className="file-input">
-            Tap to upload a photo
-            {allowed ? (
-              <input
-                type="file"
-                className="hidden"
-                id="file-input"
-                onChange={e => {
-                  readFile(e.target.files[0])
-                    .then(setSrc)
-                    .catch(err => setError(err.message));
-                }}
-              />
-            ) : (
-              <button
-                type="button"
-                style={{
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  color: 'transparent',
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100vh',
-                }}
-                onClick={() => {
-                  requestPermission()
-                    .then(() => setAllowed(true))
-                    .catch(err => setError(err.message));
-                }}
-              >
-                click
-              </button>
-            )}
-          </label>
-        </div>
-      )}
+      <div id="drop-zone">
+        {/* <div id="drop-zone-contents">DROP HERE</div> */}
+        <label htmlFor="file-input" className="file-input">
+          Tap to upload a photo
+          {allowed ? (
+            <input
+              type="file"
+              className="hidden"
+              id="file-input"
+              onChange={e => {
+                readFile(e.target.files[0])
+                  .then(setSrc)
+                  .catch(err => setError(err.message));
+              }}
+            />
+          ) : (
+            <button
+              type="button"
+              style={{
+                backgroundColor: 'transparent',
+                border: 'none',
+                color: 'transparent',
+                position: 'absolute',
+                width: '100%',
+                height: '100vh',
+              }}
+              onClick={() => {
+                requestPermission()
+                  .then(() => {
+                    setAllowed(true);
+                    setError('');
+                  })
+                  .catch(err => setError(err.message));
+              }}
+            >
+              click
+            </button>
+          )}
+        </label>
+      </div>
       <Debug {...{ alpha, beta, gamma, allowed: allowed.toString(), error }} />
     </>
   );
 };
 
-const ImageContainer = ({ src }) => {
+const ImageContainer = ({ src, pitch, roll }) => {
+  const [eyesOnScreen, setEyesOnScreen] = React.useState(0);
+  const [{ x, y }, setStartPosition] = React.useState({});
+
+  const addEye = e => {
+    if (eyesOnScreen === 2) return;
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+    setStartPosition({ x: clientX, y: clientY });
+    setEyesOnScreen(prev => prev + 1);
+  };
+
   return (
-    <div id="img-container">
-      <img id="main-img" alt="main" src={src} />
-      <div className="ball hidden">
-        <div className="pupil" />
+    <div id="img-container" onClick={addEye} style={{ touchAction: 'none' }}>
+      <img className="main-img" alt="main" src={src} />
+      {eyesOnScreen > 0 && (
+        <Eye startPosition={{ x, y }} pitch={pitch} roll={roll} />
+      )}
+      {eyesOnScreen > 1 && (
+        <Eye startPosition={{ x, y }} pitch={pitch} roll={roll} />
+      )}
+    </div>
+  );
+};
+
+const Eye = ({ startPosition: start, pitch, roll }) => {
+  const [{ x, y }, setPos] = React.useState({ x: start.x, y: start.y });
+  const [dragging, setDragging] = React.useState(false);
+
+  const rotation = !pitch && !roll ? Math.random() * 360 : (roll / pitch) * 360;
+
+  return (
+    <div
+      className="ball"
+      style={{
+        transform: `translate(${x - RADIUS}px, ${y - RADIUS}px)`,
+        width: `${RADIUS * 2}px`,
+        height: `${RADIUS * 2}px`,
+      }}
+      onMouseDown={() => setDragging(true)}
+      onMouseUp={() => setDragging(false)}
+      onMouseMove={e => {
+        if (!dragging) return;
+        e.preventDefault();
+        setPos({ x: e.clientX, y: e.clientY });
+      }}
+      onTouchMove={e => {
+        const { clientX, clientY } = e.touches[0];
+        setPos({ x: clientX, y: clientY });
+      }}
+    >
+      {/* <div
+        style={{
+          zIndex: 10,
+          width: `${RADIUS / 2}px`,
+          height: `${RADIUS / 2}px`,
+          position: 'absolute',
+          borderRadius: '50%',
+          backgroundColor: 'white',
+          transform: `translate(70%, 20%)`,
+          opacity: '0.3',
+        }}
+      /> */}
+      <div
+        style={{
+          width: `${RADIUS * 2}px`,
+          height: `${RADIUS * 2}px`,
+          // backgroundColor: 'blue',
+          borderRadius: '50%',
+          transform: `rotate(${rotation}deg)`,
+        }}
+      >
+        <div
+          className="pupil"
+          style={{
+            width: `${RADIUS * 1.5}px`,
+            height: `${RADIUS * 1.5}px`,
+            transform: `translate(5%, 5%)`,
+          }}
+        />
       </div>
     </div>
   );
@@ -103,11 +204,16 @@ const ImageContainer = ({ src }) => {
 const Debug = ({ allowed, error, alpha, beta, gamma }) => {
   return (
     <>
-      {error && <pre>Error: {error}</pre>}
       {!allowed && <pre>Permission not granted!</pre>}
-      <pre>Alpha: {alpha}</pre>
-      <pre>Beta: {beta}</pre>
-      <pre>Gamma: {gamma}</pre>
+      {error ? (
+        <pre>Error: {error}</pre>
+      ) : (
+        <>
+          <pre>Yaw: {alpha}</pre>
+          <pre>Pitch: {beta}</pre>
+          <pre>Roll: {gamma}</pre>
+        </>
+      )}
     </>
   );
 };

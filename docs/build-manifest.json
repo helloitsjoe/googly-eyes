@@ -1,7 +1,7 @@
 {
   "inputs": {
     "index.html.inline.0.css": {
-      "bytes": 1417,
+      "bytes": 1402,
       "imports": []
     },
     "_snowpack/pkg/common/index-e66f0a38.js": {
@@ -34,12 +34,16 @@
       "bytes": 1321,
       "imports": []
     },
+    "dist/drop-handlers.js": {
+      "bytes": 1502,
+      "imports": []
+    },
     "dist/user-media.js": {
-      "bytes": 1614,
+      "bytes": 1287,
       "imports": []
     },
     "dist/App.js": {
-      "bytes": 3133,
+      "bytes": 5702,
       "imports": [
         {
           "path": "_snowpack/pkg/react.js",
@@ -47,6 +51,10 @@
         },
         {
           "path": "dist/device-orientation.js",
+          "kind": "import-statement"
+        },
+        {
+          "path": "dist/drop-handlers.js",
           "kind": "import-statement"
         },
         {
@@ -83,10 +91,10 @@
       "entryPoint": "index.html.inline.0.css",
       "inputs": {
         "index.html.inline.0.css": {
-          "bytesInOutput": 802
+          "bytesInOutput": 797
         }
       },
-      "bytes": 803
+      "bytes": 798
     },
     "../~~bundle~~/dist/index.js": {
       "imports": [],
@@ -105,17 +113,20 @@
         "dist/device-orientation.js": {
           "bytesInOutput": 851
         },
+        "dist/drop-handlers.js": {
+          "bytesInOutput": 309
+        },
         "dist/user-media.js": {
-          "bytesInOutput": 114
+          "bytesInOutput": 122
         },
         "dist/App.js": {
-          "bytesInOutput": 1637
+          "bytesInOutput": 2936
         },
         "dist/index.js": {
           "bytesInOutput": 61
         }
       },
-      "bytes": 133718
+      "bytes": 135334
     }
   }
 }

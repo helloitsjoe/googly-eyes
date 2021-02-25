@@ -6,16 +6,9 @@ export const readFile = file => {
     reader.readAsDataURL(file);
     reader.onerror = reject;
     reader.onloadend = () => {
-      resolve(reader.result);
+      const src = reader.result;
+      resolve(src);
     };
-    // Allow dragging after image loads
-    // window.removeEventListener('drop', dropHandler);
-    // window.removeEventListener('dragstart', noop);
-    // window.removeEventListener('dragover', noop);
-    // window.removeEventListener('dragend', noop);
-
-    // addDragHandlers(document.getElementById('container'));
-    // addDragHandlers(window);
   });
 };
 
