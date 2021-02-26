@@ -31,7 +31,7 @@
       ]
     },
     "dist/device-orientation.js": {
-      "bytes": 1192,
+      "bytes": 1225,
       "imports": []
     },
     "dist/drop-handlers.js": {
@@ -43,7 +43,7 @@
       "imports": []
     },
     "dist/App.js": {
-      "bytes": 5694,
+      "bytes": 5948,
       "imports": [
         {
           "path": "_snowpack/pkg/react.js",
@@ -111,7 +111,7 @@
           "bytesInOutput": 123834
         },
         "dist/device-orientation.js": {
-          "bytesInOutput": 851
+          "bytesInOutput": 884
         },
         "dist/drop-handlers.js": {
           "bytesInOutput": 309
@@ -120,13 +120,13 @@
           "bytesInOutput": 122
         },
         "dist/App.js": {
-          "bytesInOutput": 2936
+          "bytesInOutput": 3006
         },
         "dist/index.js": {
           "bytesInOutput": 61
         }
       },
-      "bytes": 135312
+      "bytes": 135415
     }
   }
 }

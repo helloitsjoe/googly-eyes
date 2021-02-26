@@ -26,16 +26,22 @@ const DropZone = () => {
   const [alpha, setAlpha] = React.useState(0);
   const [beta, setBeta] = React.useState(0);
   const [gamma, setGamma] = React.useState(0);
-  const [allowed, setAllowed] = React.useState(false);
+  const [askedPermission, setAskedPermission] = React.useState(false);
+
+  const handlePermission = () => {};
 
   React.useEffect(() => {
     requestPermission()
       .then(() => {
-        setAllowed(true);
+        console.log(`DeviceOrientation permission granted`);
+        setAskedPermission(true);
         setError('');
       })
-      .catch(err => setError(err.message));
-
+      .catch(err => {
+        // setAskedPermission(true);
+        // setError(err.message);
+      });
+    if (!askedPermission) return null;
     window.addEventListener('deviceorientation', e => {
       const { alpha: a, beta: b, gamma: g } = getDeviceOrientation(e);
       setAlpha(a);
@@ -48,7 +54,7 @@ const DropZone = () => {
       window.removeEventListener('deviceorientation', getDeviceOrientation);
       window.removeEventListener('devicemotion', getDeviceMotion);
     };
-  }, [allowed]);
+  }, [askedPermission]);
 
   React.useEffect(() => {
     const removeWindowBlockers = addWindowBlockers();
@@ -75,7 +81,7 @@ const DropZone = () => {
         {/* <div id="drop-zone-contents">DROP HERE</div> */}
         <label htmlFor="file-input" className="file-input">
           Tap to upload a photo
-          {allowed ? (
+          {askedPermission ? (
             <input
               type="file"
               className="hidden"
@@ -100,10 +106,14 @@ const DropZone = () => {
               onClick={() => {
                 requestPermission()
                   .then(() => {
-                    setAllowed(true);
+                    console.log(`DeviceOrientation permission granted`);
+                    setAskedPermission(true);
                     setError('');
                   })
-                  .catch(err => setError(err.message));
+                  .catch(err => {
+                    setAskedPermission(true);
+                    setError(err.message);
+                  });
               }}
             >
               click
@@ -111,7 +121,15 @@ const DropZone = () => {
           )}
         </label>
       </div>
-      <Debug {...{ alpha, beta, gamma, allowed: allowed.toString(), error }} />
+      <Debug
+        {...{
+          alpha,
+          beta,
+          gamma,
+          askedPermission,
+          error,
+        }}
+      />
     </>
   );
 };
@@ -201,18 +219,19 @@ const Eye = ({ startPosition: start, pitch, roll }) => {
   );
 };
 
-const Debug = ({ allowed, error, alpha, beta, gamma }) => {
+const Debug = ({ askedPermission, error, alpha, beta, gamma }) => {
   return (
     <>
-      {!allowed && <pre>Permission not granted!</pre>}
       {error ? (
         <pre>Error: {error}</pre>
       ) : (
-        <>
-          <pre>Yaw: {alpha}</pre>
-          <pre>Pitch: {beta}</pre>
-          <pre>Roll: {gamma}</pre>
-        </>
+        askedPermission && (
+          <>
+            <pre>Yaw: {alpha}</pre>
+            <pre>Pitch: {beta}</pre>
+            <pre>Roll: {gamma}</pre>
+          </>
+        )
       )}
     </>
   );

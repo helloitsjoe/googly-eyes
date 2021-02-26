@@ -9,7 +9,7 @@ export function requestPermission() {
   }
   return DeviceOrientationEvent.requestPermission().then(permissionState => {
     if (permissionState !== 'granted') {
-      throw new Error('Permission denied');
+      throw new Error('You did not grant permission for DeviceOrientation');
     }
   });
 }
