@@ -1,3 +1,4 @@
+// https://developer.mozilla.org/en-US/docs/Web/API/Detecting_device_orientation
 export function requestPermission() {
   if (
     typeof DeviceOrientationEvent === 'undefined' ||

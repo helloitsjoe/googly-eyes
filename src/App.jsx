@@ -28,8 +28,6 @@ const DropZone = () => {
   const [gamma, setGamma] = React.useState(0);
   const [askedPermission, setAskedPermission] = React.useState(false);
 
-  const handlePermission = () => {};
-
   React.useEffect(() => {
     requestPermission()
       .then(() => {
@@ -37,10 +35,14 @@ const DropZone = () => {
         setAskedPermission(true);
         setError('');
       })
-      .catch(err => {
-        // setAskedPermission(true);
-        // setError(err.message);
+      .catch(() => {
+        // Do nothing if requestPermission errors on initial page load,
+        // this is only for when permission is cached. User will be asked
+        // again when they tap on screen, and that will fail appropriately.
       });
+  });
+
+  React.useEffect(() => {
     if (!askedPermission) return null;
     window.addEventListener('deviceorientation', e => {
       const { alpha: a, beta: b, gamma: g } = getDeviceOrientation(e);
@@ -84,6 +86,7 @@ const DropZone = () => {
           {askedPermission ? (
             <input
               type="file"
+              accept="image/*"
               className="hidden"
               id="file-input"
               onChange={e => {
