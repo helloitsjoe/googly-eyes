@@ -1,3 +1,4 @@
+console.log(`process.env.NODE_ENV:`, process.env.NODE_ENV);
 /* eslint-env node */
 module.exports = {
   mount: {
@@ -9,7 +10,7 @@ module.exports = {
   },
   devOptions: {
     // Needs https for connecting to mobile locally
-    secure: true,
+    secure: process.env.NODE_ENV !== 'production',
   },
   optimize: {
     bundle: true,
